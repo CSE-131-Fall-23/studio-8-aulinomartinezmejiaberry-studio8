@@ -4,12 +4,28 @@ public class SelectAllQuestion extends MultipleChoiceQuestion {
 
 	public SelectAllQuestion(String prompt, String answer, String[] choices) {
 		//Hint: 1 point per choice
-		//FIXME
+		super(prompt, answer, choices.length, choices);
 	}
 	
 	public int checkAnswer(String givenAnswer) {
 		//FIXME Should return partial credit (if earned)!
-		return 0;
+		String answer = super.getAnswer();
+		int points = super.getPoints();
+		for(int i = 0; i < givenAnswer.length(); i++) {
+			char current = givenAnswer.charAt(i);
+			int index = answer.indexOf(current);
+			if (index == -1) {
+				points --;
+			}
+		}
+		for(int i = 0; i < answer.length(); i++) {
+			char ans = answer.charAt(i);
+			int index = givenAnswer.indexOf(ans);
+			if (index == -1) {
+				points--;
+			}
+		}
+		return points;
 	}
 	
 	public static void main(String[] args) {
